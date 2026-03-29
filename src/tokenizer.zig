@@ -21,6 +21,16 @@ pub fn countCharacters(text: []const u8) usize {
     return count;
 }
 
+pub fn countSentences(text: []const u8) usize {
+    var count: usize = 0;
+    var it = std.mem.tokenizeAny(u8, text, ".!?;");
+    while (it.next()) |_| {
+        count += 1;
+    }
+
+    return count;
+}
+
 test "countWords with single word" {
     try std.testing.expectEqual(1, countWords("hello"));
 }
@@ -82,4 +92,41 @@ test "countCharacters does not consider punctuations" {
 test "countCharacters considers non-ascii characters" {
     try std.testing.expectEqual(3, countCharacters("Olá"));
     try std.testing.expectEqual(5, countCharacters("áéíóú"));
+}
+
+test "countSentences single sentence" {
+    try std.testing.expectEqual(1, countSentences("Simple four word sentence."));
+}
+
+test "countSentences separated by period" {
+    try std.testing.expectEqual(2, countSentences("First sentence. A second sentence."));
+}
+
+test "countSentences separated by exclamation mark" {
+    try std.testing.expectEqual(2, countSentences("First sentence! A second sentence."));
+}
+
+test "countSentences separated by question mark" {
+    try std.testing.expectEqual(2, countSentences("Is this the first sentence? A second sentence."));
+}
+
+test "countSentences separated by semicolon" {
+    try std.testing.expectEqual(2, countSentences("First sentence; A second sentence."));
+}
+
+test "countSentences consecutive terminators count as one" {
+    try std.testing.expectEqual(1, countSentences("A single sentence..."));
+    try std.testing.expectEqual(1, countSentences("A single sentence?!"));
+}
+
+test "countSentences single sentence no terminator" {
+    try std.testing.expectEqual(1, countSentences("Hello world"));
+}
+
+test "countSentences multiple sentences" {
+    try std.testing.expectEqual(3, countSentences("Hello world. How are you? I am fine."));
+}
+
+test "countSentences empty string" {
+    try std.testing.expectEqual(0, countSentences(""));
 }
