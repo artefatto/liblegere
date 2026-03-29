@@ -130,3 +130,11 @@ test "countSentences multiple sentences" {
 test "countSentences empty string" {
     try std.testing.expectEqual(0, countSentences(""));
 }
+
+test "countSentences known limitation: abbreviations are counted as sentence terminators" {
+    // Mr. Dr. etc. are not handled as abbreviations yet.
+    // "Mr. Smith" is counted as 2 sentences instead of 1.
+    // This is a known limitation to be addressed in a future version.
+    try std.testing.expectEqual(2, countSentences("Mr. Smith went home."));
+    try std.testing.expectEqual(3, countSentences("Dr. Smith and Mr. Jones went home."));
+}
