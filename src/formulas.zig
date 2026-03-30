@@ -1,6 +1,9 @@
 const std = @import("std");
 const tokenizer = @import("tokenizer.zig");
 
+// Calculates the Automated Readability Index (ARI) of an English text
+// 1. We use the formula 4.71 * (chars / words) + 0.5 * (words / sentences) - 21.43
+// 2. We round up the result
 pub fn ari(text: []const u8) !f64 {
     const chars = tokenizer.countCharacters(text);
     const words = tokenizer.countWords(text);
