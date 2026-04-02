@@ -29,3 +29,13 @@ And add the module to your executable or library:
 ```zig
 legere.module("legere");
 ```
+
+### Using a formula in your code
+
+Import legere with:
+
+```zig
+const legere = @import("legere");
+
+const result = legere.ari("Hello, world!"); // 4.0
+```
