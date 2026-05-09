@@ -12,7 +12,7 @@ Analyze your texts readability.
 Install the library with:
 
 ```sh
-zig fetch --save git+https://github.com/ivansantiagojr/liblegere.git
+zig fetch --save git+https://github.com/artefatto/liblegere.git
 ```
 
 Then add to your `build.zig`:
